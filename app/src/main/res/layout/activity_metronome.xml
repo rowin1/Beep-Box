@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_metronome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="schalago.beepbox.MetronomeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="90 bpm"
+        android:id="@+id/bpmText" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/bpmSeekBar"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:max="230"
+        android:progress="80"
+        android:clickable="false" />
+
+    <ToggleButton
+        android:text="ToggleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toggleButton"
+        android:layout_below="@+id/bpmSeekBar"
+        android:layout_alignParentStart="true"
+        android:textOff="@string/toggleOn"
+        android:textOn="@string/toggleOff" />
+
+    <Button
+        android:text="-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleButton"
+        android:layout_alignParentStart="true"
+        android:id="@+id/minusButton" />
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleButton"
+        android:layout_toEndOf="@+id/minusButton"
+        android:id="@+id/plusButton" />
+
+    <TextView
+        android:text="Andante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/italianTempoText"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/minusButton"
+        android:textStyle="normal|italic"
+        android:textSize="11sp" />
+
+</RelativeLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Beep Box</string>
+    <string name="toggleOn">Start Metronome</string>
+    <string name="toggleOff">Stop Metronome</string>
+</resources>
