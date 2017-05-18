@@ -12,15 +12,15 @@ import org.w3c.dom.Text;
 
 public class MetronomeActivity extends AppCompatActivity {
 
-    final int bpmSeekBarCorrection = 10;
-
-    private TextView bpmText = (TextView)findViewById(R.id.bpmText);
-    private TextView italianTempoText = (TextView)findViewById(R.id.italianTempoText);
+    private TextView bpmText;
+    private TextView italianTempoText;
     private Button minusButton;
     private Button plusButton;
     private SeekBar bpmSeekBar;
+    private final int bpmSeekBarCorrection = 10;
     private ToggleButton toggleButton;
 
+    private Metronome metronome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MetronomeActivity extends AppCompatActivity {
         SeekBar bpmSeekBar = (SeekBar)findViewById(R.id.bpmSeekBar);
         final ToggleButton toggleButton = (ToggleButton)findViewById(R.id.toggleButton);
 
-        final Metronome metronome = new Metronome();
+        metronome = new Metronome(this);
 
         minusButton.setOnClickListener(new View.OnClickListener() {
 
@@ -63,7 +63,7 @@ public class MetronomeActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                metronome.restart();
             }
 
             @Override

@@ -1,5 +1,6 @@
 package schalago.beepbox;
 
+import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -15,17 +16,19 @@ public class Metronome implements Runnable {
     private SoundPool soundPool;
     private int soundId;
     private Handler handler;
+    private Context context;
 
-    final int MS_PER_MINUTE = 60000;
-    final int DEFAULT_BPM = 90;
-    final int MIN_BPM = 10;
-    final int MAX_BPM = 300;
+    private final int MS_PER_MINUTE = 60000;
+    private final int DEFAULT_BPM = 90;
+    private final int MIN_BPM = 10;
+    private final int MAX_BPM = 300;
 
 
 
-    public Metronome(){
+    public Metronome(Context context){
+        this.context = context;
         createSoundPool();
-        soundId = R.raw.group_accept;
+        loadSound();
         handler = new Handler();
         isPlaying = false;
         setBpm(DEFAULT_BPM);
@@ -39,6 +42,13 @@ public class Metronome implements Runnable {
     public void pause() {
         handler.removeCallbacks(this);
         isPlaying = false;
+    }
+
+    public void restart() {
+        if (isPlaying) {
+            pause();
+            play();
+        }
     }
 
     public int getBpm() {
@@ -79,5 +89,9 @@ public class Metronome implements Runnable {
                             .build())
                     .build();
         } else soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+    }
+
+    private void loadSound() {
+        soundId = soundPool.load(context, R.raw.default_beep, 1);
     }
 }
