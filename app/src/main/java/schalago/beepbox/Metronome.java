@@ -97,10 +97,7 @@ public class Metronome implements Runnable {
     public void setTapTempo(long timeBetweenTaps) {
         long minMsPerBeat = MS_PER_MINUTE / MAX_BPM;
         long maxMsPerBeat = MS_PER_MINUTE / MIN_BPM;
-        Log.d("TAG", "setTapTempo() called");
         if (timeBetweenTaps > minMsPerBeat && timeBetweenTaps < maxMsPerBeat ){
-            Log.d("TAG", "Good tap!");
-            Log.d("TAG", "Setting bpm to: " + (int) (MS_PER_MINUTE / timeBetweenTaps));
             setBpm((int)(MS_PER_MINUTE / timeBetweenTaps));
         }
     }

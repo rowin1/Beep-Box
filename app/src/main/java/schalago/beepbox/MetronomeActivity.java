@@ -1,8 +1,10 @@
 package schalago.beepbox;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,12 +31,18 @@ public class MetronomeActivity extends AppCompatActivity {
     private Boolean tempoTappedAlready = false;
     private long tapTime;
 
+    private Handler handler;
+    private Boolean minusIncrement = false;
+    private Boolean plusIncrement = false;
+
     private Metronome metronome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metronome);
+
+        handler = new Handler();
 
         TextView bpmText = (TextView)findViewById(R.id.bpmText);
         final TextView italianTempoText = (TextView)findViewById(R.id.italianTempoText);
@@ -58,6 +66,7 @@ public class MetronomeActivity extends AppCompatActivity {
 
         metronome = new Metronome(this);
 
+
         minusButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -66,6 +75,39 @@ public class MetronomeActivity extends AppCompatActivity {
                 setBpmSeekBar(metronome.getBpm());
             }
         });
+
+        final Runnable minusRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (minusIncrement) {
+                    metronome.decreaseBpm();
+                    setBpmViews(metronome.getBpm());
+                    setBpmSeekBar(metronome.getBpm());
+                    handler.postDelayed(this, 100);
+                }
+            }
+        };
+
+        minusButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                minusIncrement = true;
+                handler.post(minusRunnable);
+                return false;
+            }
+        });
+
+        minusButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && minusIncrement ){
+                    minusIncrement = false;
+                }
+                return false;
+            }
+        });
+
 
         plusButton.setOnClickListener(new View.OnClickListener() {
 
@@ -76,6 +118,37 @@ public class MetronomeActivity extends AppCompatActivity {
             }
         });
 
+        final Runnable plusRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (plusIncrement) {
+                    metronome.increaseBpm();
+                    setBpmViews(metronome.getBpm());
+                    setBpmSeekBar(metronome.getBpm());
+                    handler.postDelayed(this, 100);
+                }
+            }
+        };
+
+        plusButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                plusIncrement = true;
+                handler.post(plusRunnable);
+                return false;
+            }
+        });
+
+        plusButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && plusIncrement ){
+                    plusIncrement = false;
+                }
+                return false;
+            }
+        });
 
         tapTempoButton.setOnClickListener(new View.OnClickListener() {
 
