@@ -2,4 +2,10 @@
     <string name="app_name">Beep Box</string>
     <string name="toggleOn">Start Metronome</string>
     <string name="toggleOff">Stop Metronome</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="secretButton">Secret Button</string>
+    <string name="default_bpmText">90 bpm</string>
+    <string name="default_italianTempoText">Andante</string>
+    <string name="tapTempo">Tap</string>
 </resources>

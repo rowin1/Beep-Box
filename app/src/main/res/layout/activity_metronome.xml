@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="90 bpm"
+        android:text="@string/default_bpmText"
         android:id="@+id/bpmText" />
 
     <SeekBar
@@ -24,12 +24,11 @@
         android:id="@+id/bpmSeekBar"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
-        android:max="230"
+        android:max="290"
         android:progress="80"
         android:clickable="false" />
 
     <ToggleButton
-        android:text="ToggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toggleButton"
@@ -39,7 +38,7 @@
         android:textOn="@string/toggleOff" />
 
     <Button
-        android:text="-"
+        android:text="@string/minus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleButton"
@@ -47,7 +46,7 @@
         android:id="@+id/minusButton" />
 
     <Button
-        android:text="+"
+        android:text="@string/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleButton"
@@ -55,7 +54,7 @@
         android:id="@+id/plusButton" />
 
     <TextView
-        android:text="Andante"
+        android:text="@string/default_italianTempoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/italianTempoText"
@@ -63,5 +62,31 @@
         android:layout_toEndOf="@+id/minusButton"
         android:textStyle="normal|italic"
         android:textSize="11sp" />
+
+    <Button
+        android:text="@string/secretButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secretButton"
+        android:layout_below="@+id/timeSignatureSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
+
+    <Button
+        android:text="@string/tapTempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleButton"
+        android:id="@+id/tapTempoButton"
+        android:layout_above="@+id/timeSignatureSpinner"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/plusButton" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeSignatureSpinner"
+        android:layout_below="@+id/minusButton"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

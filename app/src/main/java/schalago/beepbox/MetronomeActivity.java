@@ -1,14 +1,20 @@
 package schalago.beepbox;
 
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import org.w3c.dom.Text;
+
+import java.sql.Time;
 
 public class MetronomeActivity extends AppCompatActivity {
 
@@ -20,6 +26,9 @@ public class MetronomeActivity extends AppCompatActivity {
     private final int bpmSeekBarCorrection = 10;
     private ToggleButton toggleButton;
 
+    private Boolean tempoTappedAlready = false;
+    private long tapTime;
+
     private Metronome metronome;
 
     @Override
@@ -28,11 +37,24 @@ public class MetronomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_metronome);
 
         TextView bpmText = (TextView)findViewById(R.id.bpmText);
-        TextView italianTempoText = (TextView)findViewById(R.id.italianTempoText);
+        final TextView italianTempoText = (TextView)findViewById(R.id.italianTempoText);
         Button minusButton = (Button)findViewById(R.id.minusButton);
         Button plusButton = (Button)findViewById(R.id.plusButton);
+        Button tapTempoButton = (Button)findViewById(R.id.tapTempoButton);
+        Button secretButton = (Button)findViewById(R.id.secretButton);
         SeekBar bpmSeekBar = (SeekBar)findViewById(R.id.bpmSeekBar);
         final ToggleButton toggleButton = (ToggleButton)findViewById(R.id.toggleButton);
+
+        String[] arraySpinner = new String[] {"No first beat accent", "2 beats per measure",
+                "3 beats per measure", "4 beats per measure", "5 beats per measure",
+                "6 beats per measure", "7 beats per measure", "8 beats per measure",
+                "9 beats per measure", "10 beats per measure", "11 beats per measure",
+                "12 beats per measure" };
+        Spinner timeSignatureSpinner = (Spinner) findViewById(R.id.timeSignatureSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeSignatureSpinner.setAdapter(adapter);
 
         metronome = new Metronome(this);
 
@@ -51,6 +73,32 @@ public class MetronomeActivity extends AppCompatActivity {
                 metronome.increaseBpm();
                 setBpmViews(metronome.getBpm());
                 setBpmSeekBar(metronome.getBpm());
+            }
+        });
+
+
+        tapTempoButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                if (!tempoTappedAlready) {
+                    tapTime = System.currentTimeMillis();
+                    tempoTappedAlready = true;
+                }
+                else {
+                    metronome.setTapTempo(System.currentTimeMillis() - tapTime);
+                    setBpmViews(metronome.getBpm());
+                    setBpmSeekBar(metronome.getBpm());
+                    tempoTappedAlready = false;
+                }
+            }
+        });
+
+
+
+        secretButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                metronome.toggleRandomSounds();
             }
         });
 
@@ -82,6 +130,60 @@ public class MetronomeActivity extends AppCompatActivity {
                     metronome.pause();
                 }
             }
+        });
+
+        timeSignatureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selection = parentView.getItemAtPosition(position).toString();
+                int beatsPerMeasure;
+
+                switch (selection) {
+                    case "2 beats per measure":
+                        beatsPerMeasure = 2;
+                        break;
+                    case "3 beats per measure":
+                        beatsPerMeasure = 3;
+                        break;
+                    case "4 beats per measure":
+                        beatsPerMeasure = 4;
+                        break;
+                    case "5 beats per measure":
+                        beatsPerMeasure = 5;
+                        break;
+                    case "6 beats per measure":
+                        beatsPerMeasure = 6;
+                        break;
+                    case "7 beats per measure":
+                        beatsPerMeasure = 7;
+                        break;
+                    case "8 beats per measure":
+                        beatsPerMeasure = 8;
+                        break;
+                    case "9 beats per measure":
+                        beatsPerMeasure = 9;
+                        break;
+                    case "10 beats per measure":
+                        beatsPerMeasure = 10;
+                        break;
+                    case "11 beats per measure":
+                        beatsPerMeasure = 11;
+                        break;
+                    case "12 beats per measure":
+                        beatsPerMeasure = 12;
+                        break;
+                    default:
+                        beatsPerMeasure = 0;
+                }
+
+                metronome.setBeatsPerMeasure(beatsPerMeasure);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
     }
 
