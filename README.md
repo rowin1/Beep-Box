@@ -12,6 +12,8 @@ Hit the START button to toggle the metronome on, and STOP to toggle off.
 
 Tap or hold the "-" or "+" buttons to decrease or increase the beats per minute, or slide the seekbar (slider).
 
+Tap the TAP button to a beat to set a tempo to match an outside source, like a song on the radio.
+
 Select a time signature from the dropdown to designate the amount of beats per measure.  An accent will be applied to the first beat of each measure.
 
 ### About
