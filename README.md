@@ -2,8 +2,8 @@
 Android Metronome. Beep beep.
 
 ### Screenshots
-![Screenshot](/screenshots/beepbox-main.png)
-![Screenshot](/screenshots/beepbox-timesignature.png)
+![Screenshot](/screenshots/beepbox-main.jpeg)
+![Screenshot](/screenshots/beepbox-timesignature.jpeg)
 
 ### How to Use
 Beep Box is simple to use. It has a clear, concise, and responsive design.
